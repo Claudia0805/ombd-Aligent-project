@@ -1,6 +1,7 @@
 {
     "name": "modb-project",
     "version": "0.1.0",
+    "homepage": "https://claudia0805.github.io/ombd-Aligent-project/",
     "private": true,
     "dependencies": {
         "@emotion/react": "^11.11.4",
