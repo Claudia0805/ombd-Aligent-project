@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.e4d45a67.css",
-    "main.js": "/static/js/main.f3a317d2.js",
-    "static/js/453.56fcb5b7.chunk.js": "/static/js/453.56fcb5b7.chunk.js",
-    "static/media/default-movie.png": "/static/media/default-movie.6e7da784431cdb928eac.png",
-    "index.html": "/index.html",
-    "main.e4d45a67.css.map": "/static/css/main.e4d45a67.css.map",
-    "main.f3a317d2.js.map": "/static/js/main.f3a317d2.js.map",
-    "453.56fcb5b7.chunk.js.map": "/static/js/453.56fcb5b7.chunk.js.map"
+    "main.css": "/ombd-Aligent-project/static/css/main.e4d45a67.css",
+    "main.js": "/ombd-Aligent-project/static/js/main.fc871e9e.js",
+    "static/js/453.56fcb5b7.chunk.js": "/ombd-Aligent-project/static/js/453.56fcb5b7.chunk.js",
+    "static/media/default-movie.png": "/ombd-Aligent-project/static/media/default-movie.6e7da784431cdb928eac.png",
+    "index.html": "/ombd-Aligent-project/index.html",
+    "main.e4d45a67.css.map": "/ombd-Aligent-project/static/css/main.e4d45a67.css.map",
+    "main.fc871e9e.js.map": "/ombd-Aligent-project/static/js/main.fc871e9e.js.map",
+    "453.56fcb5b7.chunk.js.map": "/ombd-Aligent-project/static/js/453.56fcb5b7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e4d45a67.css",
-    "static/js/main.f3a317d2.js"
+    "static/js/main.fc871e9e.js"
   ]
 }
