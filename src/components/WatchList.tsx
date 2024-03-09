@@ -1,4 +1,3 @@
-import BookmarkSharpIcon from '@mui/icons-material/BookmarkSharp';
 import CancelIcon from '@mui/icons-material/Cancel';
 import CloseIcon from '@mui/icons-material/Close';
 import Drawer from '@mui/material/Drawer';

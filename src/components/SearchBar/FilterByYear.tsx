@@ -5,10 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateSearchTerms } from '../../redux/actions/searchActions';
 import { AppState } from '../../types/type';
 import useDebounce from '../../hooks/useDebounce';
+import { DEFAULT_YEAR_RANGE } from '../../constants/constants';
 
 export const FilterByYear = () => {
     const YEAR_END = new Date().getFullYear();
-    const [range, setRange] = useState<[number, number]>([0, 0]);
+    const [range, setRange] = useState<[number, number]>([
+        DEFAULT_YEAR_RANGE.startYear,
+        DEFAULT_YEAR_RANGE.endYear,
+    ]);
 
     const searchTerms = useSelector((s: AppState) => s.searchTerms);
 

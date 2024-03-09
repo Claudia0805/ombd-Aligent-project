@@ -1,4 +1,3 @@
-// src/redux/reducers/index.ts
 import { combineReducers } from '@reduxjs/toolkit';
 
 import movieListReducer from './moveListReducers';

@@ -8,7 +8,7 @@ import { updateSearchTerms } from '../redux/actions/searchActions';
 import { MovieCard } from './MovieCard';
 import { filterMoviesByYear } from '../utils/filterMoviesByYear';
 import Skeleton from 'react-loading-skeleton';
-import { stringIsNotNullOrWhiteSpace } from '../utils/utils';
+import { isDefaultRange, stringIsNotNullOrWhiteSpace } from '../utils/utils';
 
 interface MovieListProps {
     handleMovieSelect: (selectedItem: MovieItemInfo) => void;
@@ -32,6 +32,10 @@ export const MovieList: React.FC<MovieListProps> = ({ handleMovieSelect }) => {
         const nextPage = (searchTerms?.page ?? 1) + 1;
         dispatch(updateSearchTerms({ ...searchTerms, page: nextPage }));
     };
+
+    const noYearRangeFilter: boolean = useMemo(() => {
+        return isDefaultRange(yearRange);
+    }, [yearRange]);
 
     if (isLoading)
         return (
@@ -74,13 +78,10 @@ export const MovieList: React.FC<MovieListProps> = ({ handleMovieSelect }) => {
                 }
             >
                 <div className="results-count">
-                    {totalResult ?? 0} RESULTS
-                    {canLoadMore && (
-                        <div>
-                            Please Scroll down or Click Button to find more
-                            movies.
-                        </div>
-                    )}
+                    {noYearRangeFilter
+                        ? totalResult ?? 0
+                        : filteredMovieList.length}
+                    RESULTS
                 </div>
 
                 {filteredMovieList.map((movie) => (

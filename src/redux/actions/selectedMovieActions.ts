@@ -1,4 +1,3 @@
-import { MovieItemInfo } from '../../types/type';
 import { RESET_SELECTED_MOVIE, SELECT_MOVIE_TO_VIEW } from '../types';
 
 export const setSelectedMovieId = (id: string) => ({

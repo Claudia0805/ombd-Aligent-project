@@ -6,6 +6,12 @@ export const OMDB_API_KEY = '1fce73e8';
 
 export const API_PARAM_R = 'json';
 
+export const DEFAULT_YEAR_RANGE = {
+    // The first movie is delivered in 1888
+    startYear: 1888,
+    endYear: 2024,
+};
+
 export const INITIAL_STATE: AppState = {
     movieListState: {
         movieList: [],
@@ -15,11 +21,7 @@ export const INITIAL_STATE: AppState = {
     watchList: [],
     searchTerms: {
         title: '',
-        yearRange: {
-            // The first movie is delivered in 1888
-            startYear: 1888,
-            endYear: 2024,
-        },
+        yearRange: DEFAULT_YEAR_RANGE,
         type: MovieType.Any,
         page: 1,
     },

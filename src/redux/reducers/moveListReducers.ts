@@ -10,7 +10,6 @@ const movieListReducer = (
     state = INITIAL_STATE.movieListState,
     action: FetchMoviesActionType,
 ) => {
-    console.log('==>', action.type, action.payload);
     switch (action.type) {
         case FETCH_MOVIES_SUCCESS:
             return action.payload;
