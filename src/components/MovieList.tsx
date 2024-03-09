@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { AppState, MovieItemInfo } from '../types/type';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,7 +8,6 @@ import { updateSearchTerms } from '../redux/actions/searchActions';
 import { MovieCard } from './MovieCard';
 import { filterMoviesByYear } from '../utils/filterMoviesByYear';
 import Skeleton from 'react-loading-skeleton';
-import { Console } from 'console';
 import { stringIsNotNullOrWhiteSpace } from '../utils/utils';
 
 interface MovieListProps {
@@ -16,53 +15,28 @@ interface MovieListProps {
 }
 
 export const MovieList: React.FC<MovieListProps> = ({ handleMovieSelect }) => {
-    const movieListState = useSelector(
-        (state: AppState) => state.movieListState,
-    );
+    const { movieList, isLoading, error, totalResult, response, canLoadMore } =
+        useSelector((state: AppState) => state.movieListState);
+    const searchTerms = useSelector((state: AppState) => state.searchTerms);
+    const { yearRange, page, title } = searchTerms;
 
-    const movieList = useSelector((s: AppState) => s.movieListState?.movieList);
-    const isFetching = useSelector((s: AppState) => s.isFetching);
-    const error = useSelector((s: AppState) => s.error);
-
-    const { yearRange, page, title } = useSelector(
-        (s: AppState) => s.searchTerms,
-    );
+    const dispatch = useDispatch();
 
     const filteredMovieList = useMemo(() => {
-        return (movieList ?? []).filter((movie) =>
+        return movieList.filter((movie) =>
             filterMoviesByYear(movie, yearRange),
         );
     }, [movieList, yearRange]);
-
-    const dispatch = useDispatch();
-    const searchTerms = useSelector((state: AppState) => state.searchTerms);
-
-    const canLoadMore = useMemo(() => {
-        if (movieListState?.totalResult != null) {
-            if (
-                movieListState.response != null &&
-                movieListState.response === 'True' &&
-                (movieList ?? []).length < movieListState.totalResult
-            ) {
-                return true;
-            }
-        } else if (
-            page != null &&
-            page > 1 &&
-            movieListState?.response === 'False'
-        ) {
-            return false;
-        }
-        return false;
-    }, [movieList, movieListState, page]);
 
     const loadNextPage = () => {
         const nextPage = (searchTerms?.page ?? 1) + 1;
         dispatch(updateSearchTerms({ ...searchTerms, page: nextPage }));
     };
 
-    if (isFetching)
-        return <div className="movie-list  border-right">Loading...</div>;
+    if (isLoading)
+        return (
+            <div className="movie-list border-right message">Loading...</div>
+        );
 
     if (error)
         return (
@@ -71,7 +45,7 @@ export const MovieList: React.FC<MovieListProps> = ({ handleMovieSelect }) => {
             </div>
         );
 
-    if (!filteredMovieList.length)
+    if (movieList.length === 0 && filteredMovieList.length === 0)
         return (
             <div className="movie-list border-right message">
                 No movies found.
@@ -83,7 +57,7 @@ export const MovieList: React.FC<MovieListProps> = ({ handleMovieSelect }) => {
             <InfiniteScroll
                 dataLength={filteredMovieList.length}
                 next={loadNextPage}
-                hasMore={canLoadMore}
+                hasMore={canLoadMore ?? false}
                 loader={
                     <h4 style={{ textAlign: 'center' }}>
                         <Skeleton count={10} height={145} />
@@ -100,8 +74,13 @@ export const MovieList: React.FC<MovieListProps> = ({ handleMovieSelect }) => {
                 }
             >
                 <div className="results-count">
-                    {filteredMovieList.length} RESULTS
-                    {canLoadMore && <div>Scroll to find more movies.</div>}
+                    {totalResult ?? 0} RESULTS
+                    {canLoadMore && (
+                        <div>
+                            Please Scroll down or Click Button to find more
+                            movies.
+                        </div>
+                    )}
                 </div>
 
                 {filteredMovieList.map((movie) => (

@@ -6,8 +6,9 @@ import { SearchBar } from './components/SearchBar/SearchBar';
 import { AppState, MovieItemInfo } from './types/type';
 
 import './styles/common.style.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { stringIsNotNullOrWhiteSpace } from './utils/utils';
+import { setSelectedMovieId } from './redux/actions/selectedMovieActions';
 
 const App = () => {
     const [selectedMovie, setSelectedMovie] =
@@ -15,8 +16,11 @@ const App = () => {
 
     const title = useSelector((s: AppState) => s.searchTerms.title);
 
+    const dispatch = useDispatch();
+
     const handleMovieSelect = (movie: MovieItemInfo) => {
         setSelectedMovie(movie);
+        dispatch(setSelectedMovieId(movie.imdbID));
     };
 
     return (

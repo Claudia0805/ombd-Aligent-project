@@ -2,7 +2,8 @@ import React, { FC } from 'react';
 import styled from 'styled-components';
 
 import DefaultPoster from '../assets/images/default-movie.png';
-import { MovieItemInfo } from '../types/type';
+import { AppState, MovieItemInfo } from '../types/type';
+import { useSelector } from 'react-redux';
 
 interface MovieCardProps {
     movie: MovieItemInfo;
@@ -20,10 +21,12 @@ const MovieCardContainer = styled.div`
 `;
 
 export const MovieCard: FC<MovieCardProps> = ({ movie, onSelect }) => {
+    const selectedMovieId = useSelector((s: AppState) => s.selectedMovieId);
+
     return (
         <MovieCardContainer
             onClick={() => onSelect(movie)}
-            className="movie-card border-bottom"
+            className={`movie-card border-bottom ${selectedMovieId === movie.imdbID ? 'selected' : ''}`}
         >
             <div className="movie-poster">
                 <img

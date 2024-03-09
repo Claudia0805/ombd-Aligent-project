@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 import WatchList from './WatchList';
@@ -9,35 +9,17 @@ import {
     MovieDetailSection,
     MovieItemContainer,
 } from '../styles/MovieItem.style';
-import { MovieItemInfo } from '../types/type';
-import { fetchMovieDetailApi } from '../utils/fetchMovieDetail';
+import { useFetchMovieDetails } from '../hooks/useFetchMovieDetails';
+import { stringIsNotNullOrWhiteSpace } from '../utils/utils';
 
 interface MovieItemProps {
     imdbID: string;
 }
 
 const MovieItem: React.FC<MovieItemProps> = ({ imdbID }) => {
-    const [movie, setMovie] = useState<MovieItemInfo | null>(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const { movie, isLoading, error } = useFetchMovieDetails(imdbID);
 
-    useEffect(() => {
-        const fetchMovieDetails = async () => {
-            setIsLoading(true);
-            try {
-                const movieDetails = await fetchMovieDetailApi(imdbID);
-                setMovie(movieDetails);
-            } catch (error) {
-                console.error('Failed to fetch movie details', error);
-                setMovie(null);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchMovieDetails();
-    }, [imdbID]);
-
-    if (isLoading || !movie) {
+    if (isLoading) {
         return (
             <MovieItemContainer className="movie-detail">
                 <Skeleton height={350} width={250} />
@@ -45,6 +27,14 @@ const MovieItem: React.FC<MovieItemProps> = ({ imdbID }) => {
                     <Skeleton height={36} width={300} />
                     <Skeleton count={4} />
                 </div>
+            </MovieItemContainer>
+        );
+    }
+
+    if (stringIsNotNullOrWhiteSpace(error) || !movie) {
+        return (
+            <MovieItemContainer className="movie-detail">
+                <div>Error loading movie details or movie not found.</div>;
             </MovieItemContainer>
         );
     }
@@ -60,8 +50,6 @@ const MovieItem: React.FC<MovieItemProps> = ({ imdbID }) => {
         Plot,
         Ratings,
     } = movie;
-
-    console.log('==>detail', movie);
 
     return (
         <MovieItemContainer className="movie-detail">

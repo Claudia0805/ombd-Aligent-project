@@ -55,7 +55,7 @@ flowchart TD
     C -->|API Request| E[Fetch Movies]
     E --> F[Store Fetched Movie List in Redux Store]
     F --> G[Display Movie List Sidebar]
-    G --> H{More Pages Available/page<=100>}
+    G --> H{More Pages Available>}
     H -->|Yes| I[Load More Movies]
     H -->|No| J[End of Movie List]
     I --> G

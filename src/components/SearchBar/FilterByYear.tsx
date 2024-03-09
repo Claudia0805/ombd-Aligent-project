@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { updateSearchTerms } from '../../redux/actions/searchActions';
 import { AppState } from '../../types/type';
+import useDebounce from '../../hooks/useDebounce';
 
 export const FilterByYear = () => {
     const YEAR_END = new Date().getFullYear();
@@ -19,17 +20,33 @@ export const FilterByYear = () => {
     }, [YEAR_END, searchTerms]);
 
     const dispatch = useDispatch();
-    const handleYearChange = (_: Event, value: number | Array<number>) => {
-        if (Array.isArray(value) && value.length === 2) {
-            const startYear = value[0];
-            const endYear = value[1];
-            setRange([startYear, endYear]);
+
+    const debouncedYearRange = useDebounce(range, 500);
+
+    useEffect(() => {
+        // Only dispatch action if debouncedYearRange is different from the current searchTerms yearRange
+        // This prevents unnecessary updates
+        if (
+            debouncedYearRange[0] !== searchTerms.yearRange?.startYear ||
+            debouncedYearRange[1] !== searchTerms.yearRange?.endYear
+        ) {
             dispatch(
                 updateSearchTerms({
                     ...searchTerms,
-                    yearRange: { startYear, endYear },
+                    yearRange: {
+                        startYear: debouncedYearRange[0],
+                        endYear: debouncedYearRange[1],
+                    },
                 }),
             );
+        }
+    }, [debouncedYearRange, dispatch, searchTerms]);
+
+    const handleYearChange = (_: Event, newValue: number | Array<number>) => {
+        if (Array.isArray(newValue) && newValue.length === 2) {
+            const startYear = newValue[0];
+            const endYear = newValue[1];
+            setRange([startYear, endYear]);
         }
     };
 

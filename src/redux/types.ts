@@ -1,16 +1,15 @@
-import {
-    MovieItemInfo,
-    MovieListState,
-    MovieType,
-    SearchTerms,
-    YearRange,
-} from '../types/type';
+import { MovieItemInfo, MovieListState, SearchTerms } from '../types/type';
 
 //movie list Action Types
+export const FETCH_MOVIE_REQUEST = 'FETCH_MOVIE_REQUEST';
 export const FETCH_MOVIES_SUCCESS = 'FETCH_MOVIES_SUCCESS';
 export const FETCH_MOVIES_FAILURE = 'FETCH_MOVIES_FAILURE';
 
 export type FetchMoviesActionType =
+    | {
+          type: typeof FETCH_MOVIE_REQUEST;
+          payload: boolean;
+      }
     | {
           type: typeof FETCH_MOVIES_SUCCESS;
           payload: MovieListState;
@@ -42,3 +41,20 @@ export interface RemoveFromWatchListAction {
 export type WatchListActionTypes =
     | AddToWatchListAction
     | RemoveFromWatchListAction;
+
+// selected movie Action Types
+export const SELECT_MOVIE_TO_VIEW = 'SELECT_MOVIE_TO_VIEW';
+export const RESET_SELECTED_MOVIE = 'RESET_SELECTED_MOVIE';
+
+export interface SetSelectedMovieListActionType {
+    type: typeof SELECT_MOVIE_TO_VIEW;
+    payload: string;
+}
+
+export interface ResetSelectedMovieListActionType {
+    type: typeof RESET_SELECTED_MOVIE;
+}
+
+export type SelectedMovieActionTypes =
+    | SetSelectedMovieListActionType
+    | ResetSelectedMovieListActionType;

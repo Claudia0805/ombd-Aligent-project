@@ -10,6 +10,7 @@ export const INITIAL_STATE: AppState = {
     movieListState: {
         movieList: [],
         totalResult: 0,
+        canLoadMore: false,
     },
     watchList: [],
     searchTerms: {
@@ -20,7 +21,7 @@ export const INITIAL_STATE: AppState = {
             endYear: 2024,
         },
         type: MovieType.Any,
+        page: 1,
     },
-    isFetching: false,
-    error: undefined,
+    selectedMovieId: '',
 };

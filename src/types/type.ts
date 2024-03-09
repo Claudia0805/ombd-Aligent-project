@@ -12,9 +12,9 @@ export enum MovieType {
 
 export interface SearchTerms {
     title?: string;
-    yearRange?: YearRange;
-    type?: MovieType;
-    page?: number;
+    yearRange: YearRange;
+    type: MovieType;
+    page: number;
 }
 
 interface Rating {
@@ -54,12 +54,14 @@ export interface MovieListState {
     movieList: Array<MovieItemInfo>;
     response?: string;
     totalResult?: number;
+    isLoading?: boolean;
+    error?: string;
+    canLoadMore?: boolean;
 }
 
 export interface AppState {
-    movieListState?: MovieListState;
+    movieListState: MovieListState;
     watchList: Array<MovieItemInfo>;
     searchTerms: SearchTerms;
-    isFetching: boolean;
-    error?: string;
+    selectedMovieId?: string;
 }
