@@ -18,7 +18,13 @@ export const FilterByType = () => {
     const handleTypeChange = (event: React.MouseEvent<HTMLLabelElement>) => {
         const target = event.target as HTMLInputElement;
         const type = target.value as MovieType;
-        dispatch(updateSearchTerms({ ...searchTerms, type, page: 1 }));
+        dispatch(
+            updateSearchTerms({
+                ...searchTerms,
+                type,
+                page: 1,
+            }),
+        );
     };
 
     return (

@@ -52,6 +52,7 @@ export interface MovieItemInfo {
 
 export interface MovieListState {
     movieList: Array<MovieItemInfo>;
+    filteredMovieList: Array<MovieItemInfo>;
     response?: string;
     totalResult?: number;
     isLoading?: boolean;
@@ -64,4 +65,5 @@ export interface AppState {
     watchList: Array<MovieItemInfo>;
     searchTerms: SearchTerms;
     selectedMovieId?: string;
+    isLoadingPage: boolean;
 }

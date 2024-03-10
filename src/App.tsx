@@ -11,15 +11,12 @@ import { stringIsNotNullOrWhiteSpace } from './utils/utils';
 import { setSelectedMovieId } from './redux/actions/selectedMovieActions';
 
 const App = () => {
-    const [selectedMovie, setSelectedMovie] =
-        React.useState<MovieItemInfo | null>(null);
-
     const title = useSelector((s: AppState) => s.searchTerms.title);
+    const selectedMovieId = useSelector((s: AppState) => s.selectedMovieId);
 
     const dispatch = useDispatch();
 
     const handleMovieSelect = (movie: MovieItemInfo) => {
-        setSelectedMovie(movie);
         dispatch(setSelectedMovieId(movie.imdbID));
     };
 
@@ -32,9 +29,7 @@ const App = () => {
             {stringIsNotNullOrWhiteSpace(title) ? (
                 <div className="content">
                     <MovieList handleMovieSelect={handleMovieSelect} />
-                    {selectedMovie && (
-                        <MovieItem imdbID={selectedMovie.imdbID} />
-                    )}
+                    {selectedMovieId && <MovieItem imdbID={selectedMovieId} />}
                 </div>
             ) : (
                 <div className="content message">

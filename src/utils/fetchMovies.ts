@@ -26,14 +26,6 @@ export const fetchMoviesApi = async (
         page: page ? page.toString() : '1',
     });
     const listURL = `${OMDB_API_BASE_URL}?${queryParams.toString()}`;
-
-    let responseState: MovieListState = {
-        movieList: [],
-        isLoading: true,
-        error: '',
-        canLoadMore: true,
-    };
-
     try {
         const response = await fetch(listURL);
         if (!response.ok) {
@@ -42,8 +34,10 @@ export const fetchMoviesApi = async (
         const data = await response.json();
         if (data.Response === 'True') {
             const newList = data.Search as Array<MovieItemInfo>;
-            responseState = {
+            return {
                 movieList: page > 1 ? movieList.concat(newList) : newList,
+                filteredMovieList:
+                    page > 1 ? movieList.concat(newList) : newList,
                 response: data.Response,
                 totalResult: parseInt(data.totalResults, 10),
                 error: '',
@@ -52,30 +46,43 @@ export const fetchMoviesApi = async (
             };
         } else if (data.Response === 'False') {
             // If page more than 1, false response means reach the end of search results.
-            if (page > 1) {
+            console.log('here', page, movieList);
+            if (page === 1) {
                 return {
-                    movieList: movieList,
+                    movieList: [],
+                    filteredMovieList: [],
                     response: data.Response,
-                    totalResult: data.totalResults,
+                    totalResult: 0,
                     canLoadMore: false,
                     isLoading: false,
+                    error: data.Error,
                 };
             }
+
             return {
-                movieList: [],
+                movieList: movieList,
+                filteredMovieList: movieList,
                 response: data.Response,
-                totalResult: 0,
+                totalResult: data.totalResults,
                 canLoadMore: false,
                 isLoading: false,
+                error: data.Error,
             };
         } else {
             throw new Error(data.Error || 'Unknown error from API');
         }
     } catch (err) {
-        throw err instanceof Error
-            ? err.message
-            : new Error('An unknown error occurred');
+        return {
+            movieList: [],
+            filteredMovieList: [],
+            response: 'False',
+            totalResult: 0,
+            canLoadMore: false,
+            isLoading: false,
+            error:
+                err instanceof Error
+                    ? err.message
+                    : 'An unknown error occurred',
+        };
     }
-
-    return responseState;
 };

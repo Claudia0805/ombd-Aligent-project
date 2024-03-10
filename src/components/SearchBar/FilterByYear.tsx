@@ -2,7 +2,7 @@ import { Slider } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { updateSearchTerms } from '../../redux/actions/searchActions';
+import { updateSearchRange } from '../../redux/actions/searchActions';
 import { AppState } from '../../types/type';
 import useDebounce from '../../hooks/useDebounce';
 import { DEFAULT_YEAR_RANGE } from '../../constants/constants';
@@ -35,7 +35,7 @@ export const FilterByYear = () => {
             debouncedYearRange[1] !== searchTerms.yearRange?.endYear
         ) {
             dispatch(
-                updateSearchTerms({
+                updateSearchRange({
                     ...searchTerms,
                     yearRange: {
                         startYear: debouncedYearRange[0],

@@ -37,6 +37,14 @@ export const WatchListContainer = styled.div`
             }
         }
 
+        .my-watchlist-button {
+            &:hover {
+                color: white;
+                background-color: #666666;
+                border: none;
+            }
+        }
+
         label {
             display: flex;
             align-items: center;

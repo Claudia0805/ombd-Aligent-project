@@ -34,7 +34,9 @@ export const FilterByTitle = () => {
 
     useEffect(() => {
         if (!stringIsNotNullOrWhiteSpace(title)) {
-            dispatch(fetchMoviesSuccess({ movieList: [] }));
+            dispatch(
+                fetchMoviesSuccess({ movieList: [], filteredMovieList: [] }),
+            );
         }
     }, [debouncedTitle, dispatch, title]);
 

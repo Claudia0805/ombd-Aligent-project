@@ -59,8 +59,9 @@ export const MovieItemContainer = styled.div`
 
     .movie-ratings {
         display: flex;
-        justify-content: flex-start;
+        justify-content: center;
         padding: 20px 0;
+        text-align: center;
     }
 
     .movie-rating {

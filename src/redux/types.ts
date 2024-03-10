@@ -18,11 +18,21 @@ export type FetchMoviesActionType =
 
 // search Action Types
 export const UPDATE_SEARCH_TERMS = 'UPDATE_SEARCH_TERMS';
+export const UPDATE_SEARCH_YEAR_RANGE = 'UPDATE_SEARCH_YEAR_RANGE';
 
 export interface UpdateSearchTermsAction {
     type: typeof UPDATE_SEARCH_TERMS;
     payload: SearchTerms;
 }
+
+export interface UpdateSearchYearRangeAction {
+    type: typeof UPDATE_SEARCH_YEAR_RANGE;
+    payload: SearchTerms;
+}
+
+export type UpdateSearchTermsTypes =
+    | UpdateSearchTermsAction
+    | UpdateSearchYearRangeAction;
 
 // watchList Action Types
 export const ADD_TO_WATCHLIST = 'ADD_TO_WATCHLIST';
@@ -58,3 +68,15 @@ export interface ResetSelectedMovieListActionType {
 export type SelectedMovieActionTypes =
     | SetSelectedMovieListActionType
     | ResetSelectedMovieListActionType;
+
+// loading next page
+export const START_LOADING_PAGE = 'START_LOADING_PAGE';
+export const FINISH_LOADING_PAGE = 'FINISH_LOADING_PAGE';
+
+export type LoadingActionTypes =
+    | {
+          type: typeof START_LOADING_PAGE;
+      }
+    | {
+          type: typeof FINISH_LOADING_PAGE;
+      };

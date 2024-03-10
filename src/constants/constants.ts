@@ -15,6 +15,7 @@ export const DEFAULT_YEAR_RANGE = {
 export const INITIAL_STATE: AppState = {
     movieListState: {
         movieList: [],
+        filteredMovieList: [],
         totalResult: 0,
         canLoadMore: false,
     },
@@ -26,4 +27,5 @@ export const INITIAL_STATE: AppState = {
         page: 1,
     },
     selectedMovieId: '',
+    isLoadingPage: false,
 };

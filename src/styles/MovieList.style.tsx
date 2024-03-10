@@ -25,10 +25,6 @@ export const MovieListContainer = styled.div`
     .results-count {
         color: #c4c4c4;
         padding: 10px 40px;
-
-        > div {
-            padding-top: 10px;
-        }
     }
 
     .load-more-btn {
@@ -56,6 +52,14 @@ export const MovieListContainer = styled.div`
         flex-direction: column;
         justify-content: flex-start;
         color: #6f6f6f;
+    }
+
+    .movie-poster img {
+        height: 80px;
+        width: 80px;
+        min-width: 80px;
+        object-fit: cover;
+        border-radius: 10px;
     }
 
     @media screen and (max-width: 768px) {

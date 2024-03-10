@@ -13,6 +13,7 @@ import {
 } from '../redux/actions/watchlistActions';
 import { AppState, MovieItemInfo } from '../types/type';
 import { WatchListContainer } from '../styles/WatchList.style';
+import { setSelectedMovieId } from '../redux/actions/selectedMovieActions';
 
 interface WatchListProps {
     movieDetail: MovieItemInfo;
@@ -48,6 +49,10 @@ const WatchList: React.FC<WatchListProps> = ({ movieDetail }) => {
     const isSelected = useMemo(() => {
         return watchList.find((movie) => movie.imdbID === movieDetail.imdbID);
     }, [movieDetail.imdbID, watchList]);
+
+    const handleSelectedMovie = (id: string) => {
+        dispatch(setSelectedMovieId(id));
+    };
 
     return (
         <WatchListContainer className="watch-list">
@@ -116,9 +121,9 @@ const WatchList: React.FC<WatchListProps> = ({ movieDetail }) => {
                                 />
                                 <MovieCard
                                     movie={movie}
-                                    onSelect={() => {
-                                        console.log('==>');
-                                    }}
+                                    onSelect={() =>
+                                        handleSelectedMovie(movie.imdbID)
+                                    }
                                 />
                             </div>
                         ))}
