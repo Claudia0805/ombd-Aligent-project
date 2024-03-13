@@ -1,6 +1,7 @@
 import { MovieItemInfo } from '../types/type';
 import { useEffect, useState } from 'react';
 import { fetchMovieDetailApi } from '../utils/fetchMovieDetail';
+import { stringIsNotNullOrWhiteSpace } from '../utils/utils';
 
 interface FetchMovieDetailsResult {
     isLoading: boolean;
@@ -24,11 +25,14 @@ export function useFetchMovieDetails(imdbID: string): FetchMovieDetailsResult {
                 setIsLoading(false);
             } catch (error) {
                 setError((error as Error).message);
+            } finally {
                 setIsLoading(false);
             }
         };
 
-        fetchMovieDetails();
+        if (stringIsNotNullOrWhiteSpace(imdbID)) {
+            fetchMovieDetails();
+        }
     }, [imdbID]);
 
     return {

@@ -20,33 +20,41 @@ export const fetchMoviesApi = async (
     const queryParams = new URLSearchParams({
         apikey: OMDB_API_KEY,
         s: title?.trim() ?? '',
-        ...(type != null &&
-            type !== MovieType.Any && { type: mapMovieTypeToApiParam(type) }),
         r: API_PARAM_R,
         page: page ? page.toString() : '1',
     });
+
+    if (type !== MovieType.Any) {
+        queryParams.set('type', mapMovieTypeToApiParam(type));
+    }
+
     const listURL = `${OMDB_API_BASE_URL}?${queryParams.toString()}`;
+
     try {
         const response = await fetch(listURL);
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error('Failed to fetch from network');
         }
+
         const data = await response.json();
+
         if (data.Response === 'True') {
-            const newList = data.Search as Array<MovieItemInfo>;
+            const result = data.Search as Array<MovieItemInfo>;
+            const newList = page > 1 ? [...movieList, ...result] : result;
+
             return {
-                movieList: page > 1 ? movieList.concat(newList) : newList,
-                filteredMovieList:
-                    page > 1 ? movieList.concat(newList) : newList,
+                movieList: newList,
+                filteredMovieList: newList,
                 response: data.Response,
                 totalResult: parseInt(data.totalResults, 10),
                 error: '',
-                canLoadMore: true,
+                canLoadMore: page * 10 < parseInt(data.totalResults, 10),
                 isLoading: false,
             };
-        } else if (data.Response === 'False') {
-            // If page more than 1, false response means reach the end of search results.
-            console.log('here', page, movieList);
+        }
+
+        if (data.Response === 'False') {
+            // If page is equal to 1, means no movies find with search terms
             if (page === 1) {
                 return {
                     movieList: [],
@@ -59,6 +67,7 @@ export const fetchMoviesApi = async (
                 };
             }
 
+            // If page more than 1, false response means reach the end of search results.
             return {
                 movieList: movieList,
                 filteredMovieList: movieList,
@@ -68,10 +77,11 @@ export const fetchMoviesApi = async (
                 isLoading: false,
                 error: data.Error,
             };
-        } else {
-            throw new Error(data.Error || 'Unknown error from API');
         }
+
+        throw new Error(data.Error || 'Unknown error from API');
     } catch (err) {
+        console.error(err);
         return {
             movieList: [],
             filteredMovieList: [],
