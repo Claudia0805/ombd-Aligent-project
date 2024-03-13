@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/ombd-Aligent-project/static/css/main.92df4050.css",
-    "main.js": "/ombd-Aligent-project/static/js/main.95ebcde7.js",
+    "main.css": "/ombd-Aligent-project/static/css/main.54793d65.css",
+    "main.js": "/ombd-Aligent-project/static/js/main.6526ade1.js",
     "static/js/453.56fcb5b7.chunk.js": "/ombd-Aligent-project/static/js/453.56fcb5b7.chunk.js",
     "static/media/default-movie.png": "/ombd-Aligent-project/static/media/default-movie.6e7da784431cdb928eac.png",
     "index.html": "/ombd-Aligent-project/index.html",
-    "main.92df4050.css.map": "/ombd-Aligent-project/static/css/main.92df4050.css.map",
-    "main.95ebcde7.js.map": "/ombd-Aligent-project/static/js/main.95ebcde7.js.map",
+    "main.54793d65.css.map": "/ombd-Aligent-project/static/css/main.54793d65.css.map",
+    "main.6526ade1.js.map": "/ombd-Aligent-project/static/js/main.6526ade1.js.map",
     "453.56fcb5b7.chunk.js.map": "/ombd-Aligent-project/static/js/453.56fcb5b7.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.92df4050.css",
-    "static/js/main.95ebcde7.js"
+    "static/css/main.54793d65.css",
+    "static/js/main.6526ade1.js"
   ]
 }
