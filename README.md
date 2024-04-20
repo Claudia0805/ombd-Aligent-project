@@ -1,7 +1,3 @@
-## Live Demo
-
-https://claudia0805.github.io/ombd-Aligent-project/
-
 ## Available Scripts
 
 In the project directory, you can run:
